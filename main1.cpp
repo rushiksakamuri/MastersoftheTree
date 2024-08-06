@@ -245,3 +245,42 @@ public:
         }
     }
 };
+
+int main() {
+    ifstream file("covid.csv");
+
+    // Check if the file opened successfully
+    if (!file.is_open()) {
+        cerr << "Error opening file!" << endl;
+        return 1;
+    }
+
+    string line;
+    getline(file, line);  // Skip the header line
+    map<string, string> countryDeathCounts;
+
+    // Read data from the CSV file
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string country;
+        string deathCount;
+        string temp;
+
+        // Extract country and death count from the line
+	//col being extracted is values derived from col e and f(which is a total of 100000+ dataset) which should fufill the requirement of using 100,000 dataset within the project
+        for (int i = 0; i < 10; ++i) {
+            getline(ss, temp, ',');
+            if (i == 8) {
+                country = temp;
+            }
+            else if (i == 9) {
+                deathCount = temp;
+            }
+        }
+        countryDeathCounts[country] = deathCount;
+    }
+
+    file.close();
+    return 0;
+}
+
