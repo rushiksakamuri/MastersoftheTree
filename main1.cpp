@@ -173,7 +173,7 @@ void RedBlackTree::searchByDeathCountHelper(TreeNode* node, const string& deathC
     if (node == nullptr) return;
     searchByDeathCountHelper(node->left, deathCount);
     if (node->deathCount == deathCount) {
-        cout << node->deathCount << endl;
+        cout << node->country << endl;
     }
     searchByDeathCountHelper(node->right, deathCount);
 }
