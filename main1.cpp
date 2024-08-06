@@ -61,6 +61,94 @@ void RedBlackTree::deleteTree(TreeNode* node) {
     }
 }
 
+// Function to perform left rotation
+void RedBlackTree::leftRotate(TreeNode *x) {
+    TreeNode *y = x->right; // y is x's right child
+    x->right = y->left; // Turn y's left subtree into x's right subtree
+    if (y->left) y->left->parent = x; // Update parent pointer of y's left child
+    y->parent = x->parent; // Link y's parent to x's parent
+
+    if (!x->parent) root = y; // x was root, now y is root
+    else if (x == x->parent->left) x->parent->left = y; // x was left child
+    else x->parent->right = y; // x was right child
+
+    y->left = x; // Put x on y's left
+    x->parent = y; // Update x's parent pointer
+}
+
+// Function to perform right rotation
+void RedBlackTree::rightRotate(TreeNode *x) {
+    TreeNode *y = x->left; // y is x's left child
+    x->left = y->right; // Turn y's right subtree into x's left subtree
+    if (y->right) y->right->parent = x; // Update parent pointer of y's right child
+    y->parent = x->parent; // Link y's parent to x's parent
+
+    if (!x->parent) root = y; // x was root, now y is root
+    else if (x == x->parent->right) x->parent->right = y; // x was right child
+    else x->parent->left = y; // x was left child
+
+    y->right = x; // Put x on y's right
+    x->parent = y; // Update x's parent pointer
+}
+
+// Function to balance the tree after insertion
+void RedBlackTree::balanceInsert(TreeNode *k) {
+    while (k->parent && k->parent->isRed) {
+        TreeNode *gp = k->parent->parent; // Grandparent
+        TreeNode *u = (k->parent == gp->right) ? gp->left : gp->right; // Uncle
+
+        if (u && u->isRed) {
+            k->parent->isRed = u->isRed = false;
+            gp->isRed = true;
+            k = gp;
+        } else {
+            if (k->parent == gp->right) {
+                if (k == k->parent->left) {
+                    k = k->parent;
+                    rightRotate(k);
+                }
+                k->parent->isRed = false;
+                gp->isRed = true;
+                leftRotate(gp);
+            } else {
+                if (k == k->parent->right) {
+                    k = k->parent;
+                    leftRotate(k);
+                }
+                k->parent->isRed = false;
+                gp->isRed = true;
+                rightRotate(gp);
+            }
+        }
+    }
+    root->isRed = false;
+}
+
+// Function to insert a new node into the tree
+void RedBlackTree::insert(const string& country, string deathCount) {
+    TreeNode *node = new TreeNode(country, deathCount);
+    TreeNode *y = nullptr;
+    TreeNode *x = root;
+
+    while (x != nullptr) {
+        y = x;
+        if (node->country < x->country) x = x->left;
+        else x = x->right;
+    }
+
+    node->parent = y;
+    if (y == nullptr) root = node;
+    else if (node->country < y->country) y->left = node;
+    else y->right = node;
+
+    if (node->parent == nullptr) {
+        node->isRed = false;
+        return;
+    }
+
+    if (node->parent->parent == nullptr) return;
+    balanceInsert(node);
+}
 
 // Helper function to search the tree by country
 void RedBlackTree::searchTreeHelper(TreeNode* rootHelp, const string& key) {
