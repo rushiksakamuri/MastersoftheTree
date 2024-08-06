@@ -4,7 +4,10 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <chrono>
+
 using namespace std;
+using namespace std::chrono;
 
 class RedBlackTree {
 private:
@@ -388,10 +391,14 @@ int main() {
 
     file.close();
     // Insert data into the Red-Black Tree
+    
     for (auto pair: countryDeathCounts) {
         rbt.insert(pair.first, pair.second);
+    }
+    for (auto pair: countryDeathCounts) {
         wbt.insertcountry(pair.first,pair.second);
     }
+
     cout << "Welcome to Covid tree!";
     int option;
     while (option != 7) {
@@ -406,34 +413,58 @@ int main() {
 
         cin >> option;
         if (option == 1) {
+            auto t1 = std::chrono::high_resolution_clock::now();
             cout << "input a country:" << endl;
             string country;
             cin >> country;
             wbt.searchcountry(country);
+            auto t2 = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+            cout << "Time to run this command: " << duration << " milliseconds" << endl;
         }
         else if (option == 2){
+            auto t1 = std::chrono::high_resolution_clock::now();
             cout << "input deathcount:" << endl;
             string deathcount;
             cin >> deathcount;
             wbt.searchdeathcount(deathcount);
+            auto t2 = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+            cout << "Time to run this command: " << duration << " milliseconds" << endl;
         }
         else if (option == 3) {
+            auto t1 = std::chrono::high_resolution_clock::now();
             wbt.printInorder();
+            auto t2 = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+            cout << "Time to run this command: " << duration << " milliseconds" << endl;
         }
         else if (option == 4) {
-            cout << "input a country!" << endl;
+            auto t1 = std::chrono::high_resolution_clock::now();
+            cout << "Time to run this command: " << endl;
             string country;
             cin >> country;
             rbt.search(country);
+            auto t2 = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+            cout << "Time to run this command: " << duration << " milliseconds" << endl;
         }
         else if (option == 5) {
+            auto t1 = std::chrono::high_resolution_clock::now();
             cout << "input deathcount!" << endl;
             string deathcount;
             cin >> deathcount;
             rbt.searchByDeathCount(deathcount);
+            auto t2 = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+            cout << "Time to run this command: " << duration << " milliseconds" << endl;
         }
         else if (option == 6) {
+            auto t1 = std::chrono::high_resolution_clock::now();
             rbt.printTree();
+            auto t2 = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
+            cout << "Time to run this command: " << duration << " milliseconds" << endl;
         }
         else if (option == 7) {
             cout << "Program ended" << endl;
