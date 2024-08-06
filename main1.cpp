@@ -192,7 +192,7 @@ void RedBlackTree::printTree() {
 void RedBlackTree::inOrderHelper(TreeNode* node) {
     if (node == nullptr) return;
     inOrderHelper(node->left);
-    cout << "Country: " << node->country << ", Death Count: " << node->deathCount << endl;
+    cout << node->country << endl;
     inOrderHelper(node->right);
 }
 class WBT {
