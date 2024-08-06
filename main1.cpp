@@ -155,7 +155,7 @@ void RedBlackTree::searchTreeHelper(TreeNode* rootHelp, const string& key) {
     if (rootHelp == nullptr) {
         cout << "Country not found!" << endl;
     } else if (key == rootHelp->country) {
-        cout << "Country: " << rootHelp->country << ", Death Count: " << rootHelp->deathCount << endl;
+        cout << rootHelp->deathCount << endl;
     } else if (key < rootHelp->country) {
         searchTreeHelper(rootHelp->left, key);
     } else {
@@ -173,7 +173,7 @@ void RedBlackTree::searchByDeathCountHelper(TreeNode* node, const string& deathC
     if (node == nullptr) return;
     searchByDeathCountHelper(node->left, deathCount);
     if (node->deathCount == deathCount) {
-        cout << "Country: " << node->country << ", Death Count: " << node->deathCount << endl;
+        cout << node->deathCount << endl;
     }
     searchByDeathCountHelper(node->right, deathCount);
 }
@@ -213,8 +213,8 @@ struct Node {
 };
 class WBT {
 private:
-     Node* root;
-     Node* rotateright(Node* node) {
+    Node* root;
+    Node* rotateright(Node* node) {
         Node* neo = node->left;
         Node* sub = neo->right;
         neo->right = node;
@@ -235,7 +235,7 @@ private:
         return neo;
     }
 
-	Node* inserth(Node* node, const string& country, const string& deathcount) {
+    Node* inserth(Node* node, const string& country, const string& deathcount) {
 
         if (node == nullptr) {
             return new Node(country, deathcount);
@@ -247,15 +247,15 @@ private:
         else if (deathcount > node->deathcount) {
             node->right = inserth(node->right, country, deathcount);
         }
-	//case if it is equal
+            //case if it is equal
         else{
             node->countries.push_back(country);
         }
         node->weight = 1 + ((node->left ? node->left->weight : 0) + (node->right ? node->right->weight : 0));
-	//directly based on opengenius and their algorithm for checking balance: https://iq.opengenus.org/weight-balanced-binary-tree/
+        //directly based on opengenius and their algorithm for checking balance: https://iq.opengenus.org/weight-balanced-binary-tree/
         float balance = (float)(node->left ? node->left->weight : 0) / (float)(node->weight);
 
-       if (balance > (1 - 0.29289) && node->left) {
+        if (balance > (1 - 0.29289) && node->left) {
             if ((float)(node->left->left ? node->left->left->weight : 0) / (float)(node->left->weight) > 0.414213) {
                 return rotateright(node);
             }
@@ -276,7 +276,7 @@ private:
         return node;
     }
 
-     Node* searchdeathcounth(Node* node, const string& deathcount) {
+    Node* searchdeathcounth(Node* node, const string& deathcount) {
         if (node == nullptr || node->deathcount == deathcount) {
             return node;
         }
@@ -293,9 +293,9 @@ private:
             return nullptr;
         }
         for (auto it: node->countries) {
-           if(it == country) {
-               countries1.push_back((node->deathcount));
-           }
+            if(it == country) {
+                countries1.push_back((node->deathcount));
+            }
         }
         searchcountryh(node->left, country, countries1);
         searchcountryh(node->right, country, countries1);
@@ -352,9 +352,9 @@ public:
 
 int main() {
     RedBlackTree rbt;
-    WBT wbt;	
+    WBT wbt;
     ifstream file("covid.csv");
-	
+
     // Check if the file opened successfully
     if (!file.is_open()) {
         cerr << "Error opening file!" << endl;
@@ -373,7 +373,7 @@ int main() {
         string temp;
 
         // Extract country and death count from the line
-	//col being extracted is values derived from col e and f(which is a total of 100000+ dataset) which should fufill the requirement of using 100,000 dataset within the project
+        //col being extracted is values derived from col e and f(which is a total of 100000+ dataset) which should fufill the requirement of using 100,000 dataset within the project
         for (int i = 0; i < 10; ++i) {
             getline(ss, temp, ',');
             if (i == 8) {
@@ -387,10 +387,10 @@ int main() {
     }
 
     file.close();
-	// Insert data into the Red-Black Tree
+    // Insert data into the Red-Black Tree
     for (auto pair: countryDeathCounts) {
         rbt.insert(pair.first, pair.second);
-	wbt.insertcountry(pair.first,pair.second);
+        wbt.insertcountry(pair.first,pair.second);
     }
     cout << "Welcome to Covid tree!";
     int option;
@@ -444,5 +444,4 @@ int main() {
         }
     }
     return 0;
-}
 }
