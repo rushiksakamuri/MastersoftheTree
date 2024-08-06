@@ -195,6 +195,22 @@ void RedBlackTree::inOrderHelper(TreeNode* node) {
     cout << node->country << endl;
     inOrderHelper(node->right);
 }
+//lots of wbt is based on Richard's project 1
+struct Node {
+    Node* left;
+    Node* right;
+    string deathcount;
+    vector<string> countries;
+    int weight;
+
+    Node(const string& country, const string& deathcount) {
+        this->countries.push_back(country);
+        this->deathcount = deathcount;
+        left = nullptr;
+        right = nullptr;
+        this->weight = 1;
+    }
+};
 class WBT {
 private:
      Node* root;
