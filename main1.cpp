@@ -335,8 +335,10 @@ public:
 };
 
 int main() {
+    RedBlackTree rbt;
+    WBT wbt;	
     ifstream file("covid.csv");
-
+	
     // Check if the file opened successfully
     if (!file.is_open()) {
         cerr << "Error opening file!" << endl;
@@ -369,6 +371,64 @@ int main() {
     }
 
     file.close();
+	// Insert data into the Red-Black Tree
+    for (auto pair: countryDeathCounts) {
+        rbt.insert(pair.first, pair.second);
+	wbt.insertcountry(pair.first,pair.second);
+    }
+    cout << "Welcome to Covid tree!";
+    int option;
+    while (option != 7) {
+        cout << "Select an option!" << endl;
+        cout << "1: Weight balance tree search by country" << endl;
+        cout << "2: Weight balance tree search by deathcount" << endl;
+        cout << "3: Weight balance tree print in order" << endl;
+        cout << "4: Red-Black tree search by country" << endl;
+        cout << "5: Red-Black tree search by deathcount" << endl;
+        cout << "6: Red-Black tree print in order" << endl;
+        cout << "7: End the program" << endl;
+
+        cin >> option;
+        if (option == 1) {
+            cout << "input a country:" << endl;
+            string country;
+            cin >> country;
+            wbt.searchcountry(country);
+        }
+        else if (option == 2){
+            cout << "input deathcount:" << endl;
+            string deathcount;
+            cin >> deathcount;
+            wbt.searchdeathcount(deathcount);
+        }
+        else if (option == 3) {
+            wbt.printInorder();
+        }
+        else if (option == 4) {
+            cout << "input a country!" << endl;
+            string country;
+            cin >> country;
+            rbt.search(country);
+        }
+        else if (option == 5) {
+            cout << "input deathcount!" << endl;
+            string deathcount;
+            cin >> deathcount;
+            rbt.searchByDeathCount(deathcount);
+        }
+        else if (option == 6) {
+            rbt.printTree();
+        }
+        else if (option == 7) {
+            cout << "Program ended" << endl;
+            break;
+        }
+        else {
+            cout << "Error! pick anther option!" << endl;
+        }
+    }
+    return 0;
+}
     return 0;
 }
 
